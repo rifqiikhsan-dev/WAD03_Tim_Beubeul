@@ -6,4 +6,4 @@
 
 ## ✨ About Me
 
-Saya mahasiswa **Ilmu Komputer** yang antusias di bidang **pengembangan aplikasi mobile dan web**. 🚀
+Saya mahasiswa **Ilmu Komputer** Universitas Cakrawala yang antusias di bidang **UI/UX Designer**. 🚀
