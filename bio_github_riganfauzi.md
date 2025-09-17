@@ -6,4 +6,4 @@
 
 ## ✨ About Me
 
-Saya mahasiswa **Ilmu Komputer** di Universitas Cakrawala yang antusias di bidang **UI/UX Designer**. 🚀
+Saya mahasiswa Ilmu Komputer di Universitas Cakrawala dengan minat pada UI/UX Design dan pengembangan perangkat lunak. 🚀
