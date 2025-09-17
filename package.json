@@ -1,0 +1,23 @@
+{
+  "name": "wad03_tim_beubeul",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rifqiikhsan-dev/WAD03_Tim_Beubeul.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rifqiikhsan-dev/WAD03_Tim_Beubeul/issues"
+  },
+  "homepage": "https://github.com/rifqiikhsan-dev/WAD03_Tim_Beubeul#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
