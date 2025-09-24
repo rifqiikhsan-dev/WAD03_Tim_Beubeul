@@ -1,0 +1,14 @@
+[
+    {
+        "username" : "aditp",
+        "name" : "Adit Praditia",
+        "email" : "aditp@mail.com",
+        "role" : "buyer"
+    },
+    {
+        "username" : "budiw",
+        "name" : "Budi Wibowo",
+        "email" : "budiw@mail.com",
+        "role" : "seller"
+    }
+]
