@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "productName": "Laptop ASUS ROG",
+    "productCategory": "Electronics",
+    "price": 20000000,
+    "owner": "budiw"
+  },
+  {
+    "id": 2,
+    "productName": "Sepatu Nike Air",
+    "productCategory": "Fashion",
+    "price": 1500000,
+    "owner": "budiw"
+  },
+  {
+    "id": 3,
+    "productName": "Meja Belajar Kayu",
+    "productCategory": "Furniture",
+    "price": 750000,
+    "owner": "budiw"
+  }
+]
