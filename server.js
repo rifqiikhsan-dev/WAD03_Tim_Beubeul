@@ -8,11 +8,13 @@ app.use(express.json());
 const aboutUsRoute = require("./Routes/aboutUsRoute");
 const greetingRoute = require("./Routes/greetingRoute");
 const userRoute = require("./Routes/userRoute");
+const productRoute = require("./Routes/productRoute");
 
 // use routes
 app.use("/aboutus", aboutUsRoute);
 app.use("/greeting", greetingRoute);
 app.use("/users", userRoute);
+app.use("/products", productRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello World from Express.js!");
