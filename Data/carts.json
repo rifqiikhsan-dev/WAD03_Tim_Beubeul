@@ -1,0 +1,24 @@
+[
+  {
+    "username": "aditp",
+    "items": [
+      {
+        "productId": 1,
+        "qty": 2
+      },
+      {
+        "productId": 2,
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "username": "budiw",
+    "items": [
+      {
+        "productId": 3,
+        "qty": 3
+      }
+    ]
+  }
+]
