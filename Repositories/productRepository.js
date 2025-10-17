@@ -1,34 +1,65 @@
-const path = require("path");
-const products = require(path.join(__dirname, "../Data/product.json"));
+const ProductModel = require("../Models/productModel");
 
 class ProductRepository {
-  static getAll() {
-    return products;
+  // Ambil semua produk
+  static async getAll() {
+    try {
+      const products = await ProductModel.findAll();
+      return products;
+    } catch (error) {
+      console.error("❌ Error saat mengambil semua produk:", error);
+      throw error;
+    }
   }
 
-  static getById(id) {
-    return products.find((p) => p.id === id);
+  // Ambil produk berdasarkan ID
+  static async getById(id) {
+    try {
+      const product = await ProductModel.findByPk(id);
+      return product;
+    } catch (error) {
+      console.error("❌ Error saat mengambil produk berdasarkan ID:", error);
+      throw error;
+    }
   }
 
-  static create(product) {
-    products.push(product);
-    return product;
+  // Buat produk baru
+  static async create(productData) {
+    try {
+      const product = await ProductModel.create(productData);
+      return product;
+    } catch (error) {
+      console.error("❌ Error saat membuat produk:", error);
+      throw error;
+    }
   }
 
-  static update(id, updatedData) {
-    const product = this.getById(id);
-    if (!product) return null;
+  // Update produk
+  static async update(id, updatedData) {
+    try {
+      const product = await ProductModel.findByPk(id);
+      if (!product) return null;
 
-    Object.assign(product, updatedData);
-    return product;
+      await product.update(updatedData);
+      return product;
+    } catch (error) {
+      console.error("❌ Error saat update produk:", error);
+      throw error;
+    }
   }
 
-  static delete(id) {
-    const index = products.findIndex((p) => p.id === id);
-    if (index === -1) return null;
+  // Hapus produk
+  static async delete(id) {
+    try {
+      const product = await ProductModel.findByPk(id);
+      if (!product) return null;
 
-    const deleted = products.splice(index, 1);
-    return deleted[0];
+      await product.destroy();
+      return product;
+    } catch (error) {
+      console.error("❌ Error saat menghapus produk:", error);
+      throw error;
+    }
   }
 }
 

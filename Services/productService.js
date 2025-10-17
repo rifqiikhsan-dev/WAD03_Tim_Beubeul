@@ -2,62 +2,70 @@ const ProductRepository = require("../Repositories/productRepository");
 const UserRepository = require("../Repositories/userRepository");
 
 class ProductService {
-  static createProduct({ productName, productCategory, price, owner }) {
-    const user = UserRepository.getUserByUsername(owner);
+  // --- Buat produk baru
+  static async createProduct({ productName, productCategory, price, owner }) {
+    const user = await UserRepository.getUserByUsername(owner);
     if (!user) throw new Error("Owner tidak ditemukan");
     if (user.role !== "seller")
       throw new Error("Hanya seller bisa tambah produk");
 
-    const products = ProductRepository.getAll();
     const newProduct = {
-      id: products.length ? products[products.length - 1].id + 1 : 1,
       productName,
       productCategory,
       price,
       owner: user.username
     };
 
-    return ProductRepository.create(newProduct);
+    return await ProductRepository.create(newProduct);
   }
 
-  static getAllProducts() {
-    return ProductRepository.getAll();
+  // --- Ambil semua produk
+  static async getAllProducts() {
+    return await ProductRepository.getAll();
   }
 
-  static getProductById(id) {
-    const product = ProductRepository.getById(id);
+  // --- Ambil produk berdasarkan ID
+  static async getProductById(id) {
+    const product = await ProductRepository.getById(id);
     if (!product) throw new Error("Produk tidak ditemukan");
     return product;
   }
 
-  static updateProduct(id, { productName, productCategory, price, owner }) {
-    const user = UserRepository.getUserByUsername(owner);
+  // --- Update produk
+  static async updateProduct(
+    id,
+    { productName, productCategory, price, owner }
+  ) {
+    const user = await UserRepository.getUserByUsername(owner);
     if (!user || user.role !== "seller")
       throw new Error("Hanya seller bisa update produk");
 
-    const product = ProductRepository.getById(id);
+    const product = await ProductRepository.getById(id);
     if (!product) throw new Error("Produk tidak ditemukan");
     if (product.owner !== user.username)
       throw new Error("Tidak bisa update produk milik orang lain");
 
-    return ProductRepository.update(id, {
+    const updatedData = {
       productName: productName ?? product.productName,
       productCategory: productCategory ?? product.productCategory,
       price: price ?? product.price
-    });
+    };
+
+    return await ProductRepository.update(id, updatedData);
   }
 
-  static deleteProduct(id, owner) {
-    const user = UserRepository.getUserByUsername(owner);
+  // --- Hapus produk
+  static async deleteProduct(id, owner) {
+    const user = await UserRepository.getUserByUsername(owner);
     if (!user || user.role !== "seller")
       throw new Error("Hanya seller bisa hapus produk");
 
-    const product = ProductRepository.getById(id);
+    const product = await ProductRepository.getById(id);
     if (!product) throw new Error("Produk tidak ditemukan");
     if (product.owner !== user.username)
       throw new Error("Tidak bisa hapus produk milik orang lain");
 
-    return ProductRepository.delete(id);
+    return await ProductRepository.delete(id);
   }
 }
 

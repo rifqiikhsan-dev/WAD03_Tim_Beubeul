@@ -1,32 +1,42 @@
 const ProductService = require("../Services/productService");
 
 class ProductController {
-  static createProduct(req, res) {
+  // --- CREATE ---
+  static async createProduct(req, res) {
     try {
-      const newProduct = ProductService.createProduct(req.body);
+      const newProduct = await ProductService.createProduct(req.body);
       res.status(201).json(newProduct);
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
   }
 
-  static getAllProducts(req, res) {
-    const products = ProductService.getAllProducts();
-    res.json(products);
+  // --- READ ALL ---
+  static async getAllProducts(req, res) {
+    try {
+      const products = await ProductService.getAllProducts();
+      res.json(products);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
   }
 
-  static getProductById(req, res) {
+  // --- READ BY ID ---
+  static async getProductById(req, res) {
     try {
-      const product = ProductService.getProductById(parseInt(req.params.id));
+      const product = await ProductService.getProductById(
+        parseInt(req.params.id)
+      );
       res.json(product);
     } catch (error) {
       res.status(404).json({ message: error.message });
     }
   }
 
-  static updateProduct(req, res) {
+  // --- UPDATE ---
+  static async updateProduct(req, res) {
     try {
-      const updated = ProductService.updateProduct(
+      const updated = await ProductService.updateProduct(
         parseInt(req.params.id),
         req.body
       );
@@ -36,9 +46,10 @@ class ProductController {
     }
   }
 
-  static deleteProduct(req, res) {
+  // --- DELETE ---
+  static async deleteProduct(req, res) {
     try {
-      const deleted = ProductService.deleteProduct(
+      const deleted = await ProductService.deleteProduct(
         parseInt(req.params.id),
         req.body.owner
       );

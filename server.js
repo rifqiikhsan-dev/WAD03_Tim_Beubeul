@@ -1,17 +1,23 @@
 const express = require("express");
-const app = express();
-const PORT = 3000;
+const sequelize = require("./Config/database");
 
-app.use(express.json());
+// Import model
+require("./Models/userModel");
+require("./Models/productModel");
 
-// import routes
+// Import routes
 const aboutUsRoute = require("./Routes/aboutUsRoute");
 const greetingRoute = require("./Routes/greetingRoute");
 const userRoute = require("./Routes/userRoute");
 const productRoute = require("./Routes/productRoute");
 const cartRoute = require("./Routes/cartRoute");
 
-// use routes
+const app = express();
+const PORT = 3000;
+
+app.use(express.json());
+
+// Gunakan routes
 app.use("/aboutus", aboutUsRoute);
 app.use("/greeting", greetingRoute);
 app.use("/users", userRoute);
@@ -19,9 +25,22 @@ app.use("/products", productRoute);
 app.use("/carts", cartRoute);
 
 app.get("/", (req, res) => {
-  res.send("Hello World from Express.js!");
+  res.send("Hello World from Express.js + Sequelize!");
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
+// ====== CONNECT & SYNC DATABASE, THEN START SERVER ======
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("✅ Database connected...");
+
+    await sequelize.sync({ alter: true });
+    console.log("✅ Models synchronized...");
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running at http://localhost:${PORT}`);
+    });
+  } catch (err) {
+    console.error("❌ Unable to connect to the database:", err);
+  }
+})();
