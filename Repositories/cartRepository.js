@@ -1,48 +1,46 @@
-const fs = require("fs");
-const path = require("path");
-const carts = require(path.join(__dirname, "../Data/carts.json"));
-
-function readJSON() {
-  return JSON.parse(fs.readFileSync(cartsPath));
-}
-
-function writeJSON(data) {
-  fs.writeFileSync(cartsPath, JSON.stringify(data, null, 2));
-}
+const CartModel = require("../Models/cartModel");
 
 class CartRepository {
-  static getAll() {
-    return readJSON();
-  }
+  static async addToCart(username, productId, qty = 1) {
+    try {
+      const [item, created] = await CartModel.findOrCreate({
+        where: { username, productId },
+        defaults: { qty },
+      });
 
-  static getByUsername(username) {
-    const carts = readJSON();
-    return carts.find(c => c.username === username);
-  }
+      if (!created) {
+        item.qty += qty;
+        await item.save();
+      }
 
-  static save(cartUser) {
-    let carts = readJSON();
-    const index = carts.findIndex(c => c.username === cartUser.username);
-
-    if (index !== -1) {
-      carts[index] = cartUser;
-    } else {
-      carts.push(cartUser);
+      return item;
+    } catch (error) {
+      console.error("Error saat menambahkan ke cart:", error);
+      throw error;
     }
-
-    writeJSON(carts);
-    return cartUser;
   }
 
-  static deleteByUsername(username, productId) {
-    let carts = readJSON();
-    const cartUser = carts.find(c => c.username === username);
-    if (!cartUser) return null;
-
-    cartUser.items = cartUser.items.filter(i => i.productId !== productId);
-    writeJSON(carts);
-    return cartUser;
+  static async getCartByUsername(username) {
+    try {
+      return await CartModel.findAll({ where: { username } });
+    } catch (error) {
+      console.error("Error saat mengambil cart:", error);
+      throw error;
+    }
   }
+
+  static async removeFromCart(username, productId) {
+    try {
+      return await CartModel.destroy({
+        where: { username, productId },
+      });
+    } catch (error) {
+      console.error("Error saat menghapus dari cart:", error);
+      throw error;
+    }
+  }
+
+  
 }
 
 module.exports = CartRepository;

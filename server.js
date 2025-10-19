@@ -4,6 +4,7 @@ const sequelize = require("./Config/database");
 // Import model
 require("./Models/userModel");
 require("./Models/productModel");
+require("./Models/cartModel");
 
 // Import routes
 const aboutUsRoute = require("./Routes/aboutUsRoute");
