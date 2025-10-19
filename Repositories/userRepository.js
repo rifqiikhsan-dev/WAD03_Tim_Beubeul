@@ -1,18 +1,19 @@
-const path = require("path");
-const users = require(path.join(__dirname, "../Data/users.json"));
+const User = require('../Models/userModel');
 
 class UserRepository {
-  getAllUsers() {
+  async getAllUsers() {
+    const users = await User.findAll();
     return users;
   }
 
-  getUserByUsername(username) {
-    return users.find((u) => u.username === username);
+  async getUserByUsername(username) {
+    const user = await User.findOne({ where: { username } });
+    return user;
   }
 
-  createUser(user) {
-    users.push(user);
-    return user;
+  async createUser(user) {
+    const newUser = await User.create(user);
+    return newUser;
   }
 }
 
