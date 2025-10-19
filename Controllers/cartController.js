@@ -1,33 +1,40 @@
 const CartService = require("../Services/cartService");
 
-exports.getCart = async (req, res) => {
-  try {
-    const username = req.params.username;
-    const cart = await CartService.getCartByUsername(username);
-    res.json(cart);
-  } catch (err) {
-    res.status(500).json({ message: "Error getting cart", error: err.message });
+class CartController {
+  static async addToCart(req, res) {
+    try {
+      const { username, productId, qty } = req.body;
+      const result = await CartService.addToCart({ username, productId, qty });
+      res.status(201).json({
+        message: "Produk berhasil ditambahkan ke cart",
+        data: result,
+      });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
   }
-};
 
-exports.addToCart = async (req, res) => {
-  try {
-    const username = req.params.username;
-    const { productId, qty } = req.body;
-    const newItem = await CartService.addToCart(username, productId, qty);
-    res.json({ message: "Product added to cart", data: newItem });
-  } catch (err) {
-    res.status(500).json({ message: "Error adding to cart", error: err.message });
+  static async getCart(req, res) {
+    try {
+      const { username } = req.params;
+      const cart = await CartService.getCart(username);
+      res.status(200).json(cart);
+    } catch (error) {
+      res.status(404).json({ message: error.message });
+    }
   }
-};
 
-exports.removeFromCart = async (req, res) => {
-  try {
-    const username = req.params.username;
-    const { productId } = req.body;
-    await CartService.removeFromCart(username, productId);
-    res.json({ message: "Product removed from cart" });
-  } catch (err) {
-    res.status(500).json({ message: "Error removing from cart", error: err.message });
+  static async removeFromCart(req, res) {
+    try {
+      const { username, productId } = req.body;
+      await CartService.removeFromCart(username, productId);
+      res.status(200).json({ message: "Produk dihapus dari cart" });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
   }
-};
+
+  
+}
+
+module.exports = CartController;
