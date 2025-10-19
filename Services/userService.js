@@ -1,20 +1,20 @@
 const userRepository = require("../Repositories/userRepository");
 
 class UserService {
-  getUsers() {
-    return userRepository.getAllUsers();
+  async getUsers() {
+    return await userRepository.getAllUsers();
   }
 
-  getUser(username) {
-    const user = userRepository.getUserByUsername(username);
+  async getUser(username) {
+    const user = await userRepository.getUserByUsername(username);
     if (!user) throw new Error("User not found");
     return user;
   }
 
-  createUser(data) {
+  async createUser(data) {
     const { username, name, email, role } = data;
 
-    const existingUser = userRepository.getUserByUsername(username);
+    const existingUser = await userRepository.getUserByUsername(username);
     if (existingUser) throw new Error("Username already exists");
 
     return userRepository.createUser({ username, name, email, role });
